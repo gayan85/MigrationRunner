@@ -149,7 +149,7 @@ namespace MigrationRunner
             Properties.Settings.Default.Server = _server;
             Properties.Settings.Default.Password = _password;
             Properties.Settings.Default.Save();
-            MessageBox.Show(@"Configuration save succeeded!!");
+            MessageBox.Show(@"Configuration save succeeded!!", @"Success", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
