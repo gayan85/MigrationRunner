@@ -51,15 +51,23 @@ namespace MigrationRunner
             var factory = new FluentMigrator.Runner.Processors.SqlServer.SqlServerProcessorFactory();
             try
             {
-                Task.Factory.StartNew(() =>
+                var task = Task.Factory.StartNew(() =>
                 {
                     using (var processor = factory.Create(connectionString, announcer, options))
                     {
                         var runner = new FluentMigrator.Runner.MigrationRunner(assembly, migrationContext, processor);
                         runner.MigrateUp(true);
-                        MessageBox.Show(@"Database Migrate succeeded!!", @"Success", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+
                     }
-                }).Wait();
+                });
+                task.ContinueWith((success) =>
+                {
+                    MessageBox.Show(@"Database Migrate succeeded!!", @"Success", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                }, TaskContinuationOptions.NotOnFaulted);
+                task.ContinueWith((success) =>
+               {
+                  MessageBox.Show(@"Database Migrate failed!!", @"ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+               }, TaskContinuationOptions.OnlyOnFaulted);
 
             }
             catch (Exception exception)
