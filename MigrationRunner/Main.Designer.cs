@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Main));
             this.btnMigrationUp = new System.Windows.Forms.Button();
             this.txtAssemblyPath = new System.Windows.Forms.TextBox();
             this.btnLoadMigration = new System.Windows.Forms.Button();
@@ -197,7 +198,8 @@
             this.Controls.Add(this.txtAssemblyPath);
             this.Controls.Add(this.btnMigrationUp);
             this.Controls.Add(this.menuStrip1);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedToolWindow;
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MainMenuStrip = this.menuStrip1;
             this.Name = "Main";
             this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Hide;
