@@ -52,7 +52,7 @@
             this.btnMigrationUp.Location = new System.Drawing.Point(403, 132);
             this.btnMigrationUp.Name = "btnMigrationUp";
             this.btnMigrationUp.Size = new System.Drawing.Size(158, 43);
-            this.btnMigrationUp.TabIndex = 0;
+            this.btnMigrationUp.TabIndex = 5;
             this.btnMigrationUp.Text = "Migration Up";
             this.btnMigrationUp.UseVisualStyleBackColor = true;
             this.btnMigrationUp.Click += new System.EventHandler(this.btnMigrationUp_Click);
@@ -63,14 +63,14 @@
             this.txtAssemblyPath.Name = "txtAssemblyPath";
             this.txtAssemblyPath.ReadOnly = true;
             this.txtAssemblyPath.Size = new System.Drawing.Size(468, 20);
-            this.txtAssemblyPath.TabIndex = 1;
+            this.txtAssemblyPath.TabIndex = 0;
             // 
             // btnLoadMigration
             // 
             this.btnLoadMigration.Location = new System.Drawing.Point(486, 43);
             this.btnLoadMigration.Name = "btnLoadMigration";
             this.btnLoadMigration.Size = new System.Drawing.Size(75, 23);
-            this.btnLoadMigration.TabIndex = 2;
+            this.btnLoadMigration.TabIndex = 7;
             this.btnLoadMigration.Text = "Load";
             this.btnLoadMigration.UseVisualStyleBackColor = true;
             this.btnLoadMigration.Click += new System.EventHandler(this.btnLoadMigration_Click);
@@ -80,21 +80,21 @@
             this.txtServer.Location = new System.Drawing.Point(71, 83);
             this.txtServer.Name = "txtServer";
             this.txtServer.Size = new System.Drawing.Size(255, 20);
-            this.txtServer.TabIndex = 3;
+            this.txtServer.TabIndex = 1;
             // 
             // txtDatabase
             // 
             this.txtDatabase.Location = new System.Drawing.Point(71, 107);
             this.txtDatabase.Name = "txtDatabase";
             this.txtDatabase.Size = new System.Drawing.Size(255, 20);
-            this.txtDatabase.TabIndex = 3;
+            this.txtDatabase.TabIndex = 2;
             // 
             // txtPassword
             // 
             this.txtPassword.Location = new System.Drawing.Point(71, 155);
             this.txtPassword.Name = "txtPassword";
             this.txtPassword.Size = new System.Drawing.Size(255, 20);
-            this.txtPassword.TabIndex = 3;
+            this.txtPassword.TabIndex = 4;
             // 
             // label1
             // 
@@ -137,7 +137,7 @@
             this.txtUsername.Location = new System.Drawing.Point(71, 131);
             this.txtUsername.Name = "txtUsername";
             this.txtUsername.Size = new System.Drawing.Size(255, 20);
-            this.txtUsername.TabIndex = 5;
+            this.txtUsername.TabIndex = 3;
             // 
             // menuStrip1
             // 
@@ -161,7 +161,7 @@
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(152, 22);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(92, 22);
             this.exitToolStripMenuItem.Text = "&Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
