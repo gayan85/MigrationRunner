@@ -8,6 +8,8 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using Microsoft.Win32;
+using MigrationRunner.Models;
 
 namespace MigrationRunner
 {
@@ -17,8 +19,32 @@ namespace MigrationRunner
         {
             InitializeComponent();
             _openFileDialog = new OpenFileDialog() { Filter = @"Migration dll file|*.dll" };
+            ListSqlInstances();
             LoadSettings();
+
+
         }
+
+        protected override void OnLoad(EventArgs e)
+        {
+
+            var btn = new Button { Size = new Size(30, txtPassword.ClientSize.Height + 2), Cursor = Cursors.Hand, Text = "\u263A" , FlatStyle = FlatStyle.System};
+            btn.Location = new Point(txtPassword.ClientSize.Width - btn.Width, -1);
+            btn.Cursor = Cursors.Hand;
+            btn.MouseDown += OnPasswordSeeEnable;
+            btn.MouseUp += OnPasswordSeeEnable;
+            txtPassword.Controls.Add(btn);
+            SendMessage(txtPassword.Handle, 0xd3, (IntPtr)2, (IntPtr)(btn.Width << 16));
+            base.OnLoad(e);
+        }
+
+        private void OnPasswordSeeEnable(object sender, MouseEventArgs e)
+        {
+            txtPassword.PasswordChar = txtPassword.PasswordChar.Equals('\0') ? '*' : '\0';
+        }
+
+        [System.Runtime.InteropServices.DllImport("user32.dll")]
+        private static extern IntPtr SendMessage(IntPtr hWnd, int msg, IntPtr wp, IntPtr lp);
 
         private string _assemblyPath;
         private string _server;
@@ -66,7 +92,7 @@ namespace MigrationRunner
                 }, TaskContinuationOptions.NotOnFaulted);
                 task.ContinueWith((success) =>
                {
-                  MessageBox.Show(@"Database Migrate failed!!", @"ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                   MessageBox.Show(@"Database Migrate failed!!", @"ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                }, TaskContinuationOptions.OnlyOnFaulted);
 
             }
@@ -115,7 +141,9 @@ namespace MigrationRunner
         {
             txtUsername.Text = Properties.Settings.Default.User;
             txtDatabase.Text = Properties.Settings.Default.Database;
-            txtServer.Text = Properties.Settings.Default.Server;
+            var server = Properties.Settings.Default.Server;
+            if (!string.IsNullOrEmpty(server))
+                cmbServer.SelectedIndex = cmbServer.FindStringExact(server);
             txtPassword.Text = Properties.Settings.Default.Password;
             ReloadSettings();
         }
@@ -123,7 +151,8 @@ namespace MigrationRunner
         private void ReloadSettings()
         {
             _user = txtUsername.Text;
-            _server = txtServer.Text;
+            var comboboxItem = cmbServer.SelectedItem as ComboboxItem;
+            if (comboboxItem != null) _server = comboboxItem.Value.ToString();
             _assemblyPath = _openFileDialog.FileName;
             _database = txtDatabase.Text;
             _password = txtPassword.Text;
@@ -155,6 +184,29 @@ namespace MigrationRunner
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Environment.Exit(0);
+        }
+
+        private void ListSqlInstances()
+        {
+            var registryView = Environment.Is64BitOperatingSystem ? RegistryView.Registry64 : RegistryView.Registry32;
+            using (var hklm = RegistryKey.OpenBaseKey(RegistryHive.LocalMachine, registryView))
+            {
+                var instanceKey = hklm.OpenSubKey(@"SOFTWARE\Microsoft\Microsoft SQL Server\Instance Names\SQL", false);
+                if (instanceKey == null) return;
+
+                foreach (var instanceName in instanceKey.GetValueNames())
+                {
+                    var item = new ComboboxItem { Text = Environment.MachineName + @"\" + instanceName, Value = Environment.MachineName + @"\" + instanceName };
+                    cmbServer.Items.Add(item);
+                }
+            }
+        }
+
+        private void cmbServer_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            var comboboxItem = cmbServer.SelectedItem as ComboboxItem;
+            if (comboboxItem != null)
+                _server = comboboxItem.Value.ToString();
         }
     }
 }

@@ -32,7 +32,6 @@
             this.btnMigrationUp = new System.Windows.Forms.Button();
             this.txtAssemblyPath = new System.Windows.Forms.TextBox();
             this.btnLoadMigration = new System.Windows.Forms.Button();
-            this.txtServer = new System.Windows.Forms.TextBox();
             this.txtDatabase = new System.Windows.Forms.TextBox();
             this.txtPassword = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
@@ -45,6 +44,7 @@
             this.exitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.toolsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.saveConfigurationToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.cmbServer = new System.Windows.Forms.ComboBox();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -76,13 +76,6 @@
             this.btnLoadMigration.UseVisualStyleBackColor = true;
             this.btnLoadMigration.Click += new System.EventHandler(this.btnLoadMigration_Click);
             // 
-            // txtServer
-            // 
-            this.txtServer.Location = new System.Drawing.Point(71, 83);
-            this.txtServer.Name = "txtServer";
-            this.txtServer.Size = new System.Drawing.Size(255, 20);
-            this.txtServer.TabIndex = 1;
-            // 
             // txtDatabase
             // 
             this.txtDatabase.Location = new System.Drawing.Point(71, 107);
@@ -94,6 +87,7 @@
             // 
             this.txtPassword.Location = new System.Drawing.Point(71, 155);
             this.txtPassword.Name = "txtPassword";
+            this.txtPassword.PasswordChar = '*';
             this.txtPassword.Size = new System.Drawing.Size(255, 20);
             this.txtPassword.TabIndex = 4;
             // 
@@ -181,11 +175,22 @@
             this.saveConfigurationToolStripMenuItem.Text = "Save Configuration";
             this.saveConfigurationToolStripMenuItem.Click += new System.EventHandler(this.saveConfigurationToolStripMenuItem_Click);
             // 
+            // cmbServer
+            // 
+            this.cmbServer.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.cmbServer.FormattingEnabled = true;
+            this.cmbServer.Location = new System.Drawing.Point(71, 80);
+            this.cmbServer.Name = "cmbServer";
+            this.cmbServer.Size = new System.Drawing.Size(255, 21);
+            this.cmbServer.TabIndex = 8;
+            this.cmbServer.SelectedIndexChanged += new System.EventHandler(this.cmbServer_SelectedIndexChanged);
+            // 
             // Main
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(573, 188);
+            this.Controls.Add(this.cmbServer);
             this.Controls.Add(this.txtUsername);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -193,7 +198,6 @@
             this.Controls.Add(this.label1);
             this.Controls.Add(this.txtPassword);
             this.Controls.Add(this.txtDatabase);
-            this.Controls.Add(this.txtServer);
             this.Controls.Add(this.btnLoadMigration);
             this.Controls.Add(this.txtAssemblyPath);
             this.Controls.Add(this.btnMigrationUp);
@@ -216,7 +220,6 @@
         private System.Windows.Forms.Button btnMigrationUp;
         private System.Windows.Forms.TextBox txtAssemblyPath;
         private System.Windows.Forms.Button btnLoadMigration;
-        private System.Windows.Forms.TextBox txtServer;
         private System.Windows.Forms.TextBox txtDatabase;
         private System.Windows.Forms.TextBox txtPassword;
         private System.Windows.Forms.Label label1;
@@ -229,6 +232,7 @@
         private System.Windows.Forms.ToolStripMenuItem exitToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem toolsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem saveConfigurationToolStripMenuItem;
+        private System.Windows.Forms.ComboBox cmbServer;
     }
 }
 
