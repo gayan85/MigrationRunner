@@ -81,6 +81,7 @@ namespace MigrationRunner
                 {
                     using (var processor = factory.Create(connectionString, announcer, options))
                     {
+                        btnMigrationUp.Text = @"Running..";
                         var runner = new FluentMigrator.Runner.MigrationRunner(assembly, migrationContext, processor);
                         runner.MigrateUp(true);
 
@@ -88,10 +89,12 @@ namespace MigrationRunner
                 });
                 task.ContinueWith((success) =>
                 {
+                    btnMigrationUp.Text = @"Migration Up";
                     MessageBox.Show(@"Database Migrate succeeded!!", @"Success", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 }, TaskContinuationOptions.NotOnFaulted);
                 task.ContinueWith((success) =>
                {
+                   btnMigrationUp.Text = @"Migration Up";
                    MessageBox.Show(@"Database Migrate failed!!", @"ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                }, TaskContinuationOptions.OnlyOnFaulted);
 
