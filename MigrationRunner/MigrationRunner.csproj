@@ -35,7 +35,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>process3.ico</ApplicationIcon>
+    <ApplicationIcon>migration.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="FluentMigrator, Version=1.6.2.0, Culture=neutral, PublicKeyToken=aacfc7de5acabf05, processorArchitecture=MSIL">
@@ -97,7 +97,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="FodyWeavers.xml" />
-    <Content Include="process3.ico" />
+    <Content Include="migration.ico" />
     <None Include="Resources\icon-eye-128.png" />
     <None Include="Resources\Eye.png" />
   </ItemGroup>
