@@ -63,9 +63,9 @@ namespace MigrationRunner.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
-        internal static System.Drawing.Bitmap Eye {
+        internal static System.Drawing.Bitmap icon_eye_128 {
             get {
-                object obj = ResourceManager.GetObject("Eye", resourceCulture);
+                object obj = ResourceManager.GetObject("icon_eye_128", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
             }
         }

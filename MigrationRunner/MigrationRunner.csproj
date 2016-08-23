@@ -98,6 +98,7 @@
   <ItemGroup>
     <Content Include="FodyWeavers.xml" />
     <Content Include="process3.ico" />
+    <None Include="Resources\icon-eye-128.png" />
     <None Include="Resources\Eye.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

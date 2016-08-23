@@ -28,13 +28,26 @@ namespace MigrationRunner
         protected override void OnLoad(EventArgs e)
         {
 
-            var btn = new Button { Size = new Size(30, txtPassword.ClientSize.Height + 2), Cursor = Cursors.Hand, Text = "\u263A" , FlatStyle = FlatStyle.System};
-            btn.Location = new Point(txtPassword.ClientSize.Width - btn.Width, -1);
-            btn.Cursor = Cursors.Hand;
-            btn.MouseDown += OnPasswordSeeEnable;
-            btn.MouseUp += OnPasswordSeeEnable;
-            txtPassword.Controls.Add(btn);
-            SendMessage(txtPassword.Handle, 0xd3, (IntPtr)2, (IntPtr)(btn.Width << 16));
+            var pictureBtn = new PictureBox
+            {
+                Size = new Size(30, txtPassword.ClientSize.Height + 2),
+                Cursor = Cursors.Hand,
+                Image = global::MigrationRunner.Properties.Resources.icon_eye_128,
+                SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom,
+                TabIndex = 9,
+                TabStop = false,
+            };
+            pictureBtn.Location = new Point(txtPassword.ClientSize.Width - pictureBtn.Width, -1);
+            pictureBtn.MouseDown += OnPasswordSeeEnable;
+            pictureBtn.MouseUp += OnPasswordSeeEnable;
+
+            //var btn = new Button { Size = new Size(30, txtPassword.ClientSize.Height + 2), Cursor = Cursors.Hand, Text = "\u263A", FlatStyle = FlatStyle.System };
+            //btn.Location = new Point(txtPassword.ClientSize.Width - btn.Width, -1);
+            //btn.Cursor = Cursors.Hand;
+            //btn.MouseDown += OnPasswordSeeEnable;
+            //btn.MouseUp += OnPasswordSeeEnable;
+            txtPassword.Controls.Add(pictureBtn);
+            SendMessage(txtPassword.Handle, 0xd3, (IntPtr)2, (IntPtr)(pictureBtn.Width << 16));
             base.OnLoad(e);
         }
 
@@ -92,10 +105,10 @@ namespace MigrationRunner
                     btnMigrationUp.Text = @"Migration Up";
                     MessageBox.Show(@"Database Migrate succeeded!!", @"Success", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                 }, TaskContinuationOptions.NotOnFaulted);
-                task.ContinueWith((success) =>
+                task.ContinueWith((fault) =>
                {
                    btnMigrationUp.Text = @"Migration Up";
-                   MessageBox.Show(@"Database Migrate failed!!", @"ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                   MessageBox.Show($"Database Migrate failed with {fault?.Exception?.Message}!!", @"ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                }, TaskContinuationOptions.OnlyOnFaulted);
 
             }
