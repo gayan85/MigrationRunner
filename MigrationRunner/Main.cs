@@ -70,7 +70,7 @@ namespace MigrationRunner
         {
             ReloadSettings();
             if (InvalidateSettings()) return;
-            var announcer = new FluentMigrator.Runner.Announcers.TextWriterAnnouncer(s => System.Diagnostics.Debug.WriteLine(s));
+            var announcer = new FluentMigrator.Runner.Announcers.TextWriterAnnouncer(s => txtOutput.Text += s);
             var assembly = Assembly.LoadFile(_assemblyPath);
             var migrationContext = new FluentMigrator.Runner.Initialization.RunnerContext(announcer)
             {
@@ -97,18 +97,20 @@ namespace MigrationRunner
                         btnMigrationUp.Text = @"Running..";
                         var runner = new FluentMigrator.Runner.MigrationRunner(assembly, migrationContext, processor);
                         runner.MigrateUp(true);
-
                     }
+                    
                 });
                 task.ContinueWith((success) =>
                 {
                     btnMigrationUp.Text = @"Migration Up";
                     MessageBox.Show(@"Database Migrate succeeded!!", @"Success", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
+                    txtOutput.Text += @"Succeeded!!";
                 }, TaskContinuationOptions.NotOnFaulted);
                 task.ContinueWith((fault) =>
                {
                    btnMigrationUp.Text = @"Migration Up";
-                   MessageBox.Show($"Database Migrate failed with {fault?.Exception?.Message}!!", @"ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                   MessageBox.Show($@"Database Migrate failed with {fault?.Exception?.Message}!!", @"ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                   txtOutput.Text += $@"Failed!! {Environment.NewLine} {fault?.Exception?.Message} {Environment.NewLine} {fault?.Exception?.InnerException?.Message}";
                }, TaskContinuationOptions.OnlyOnFaulted);
 
             }
