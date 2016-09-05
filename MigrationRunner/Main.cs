@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Microsoft.Win32;
+using MigrationRunner.Helpers;
 using MigrationRunner.Models;
 
 namespace MigrationRunner
@@ -21,31 +22,15 @@ namespace MigrationRunner
             _openFileDialog = new OpenFileDialog() { Filter = @"Migration dll file|*.dll" };
             ListSqlInstances();
             LoadSettings();
-
-
         }
 
         protected override void OnLoad(EventArgs e)
         {
 
-            var pictureBtn = new PictureBox
-            {
-                Size = new Size(30, txtPassword.ClientSize.Height + 2),
-                Cursor = Cursors.Hand,
-                Image = global::MigrationRunner.Properties.Resources.icon_eye_128,
-                SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom,
-                TabIndex = 9,
-                TabStop = false,
-            };
+            var pictureBtn = new PictureBox { Size = new Size(30, txtPassword.ClientSize.Height + 2), Cursor = Cursors.Hand, Image = global::MigrationRunner.Properties.Resources.icon_eye_128, SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom, TabIndex = 9, TabStop = false };
             pictureBtn.Location = new Point(txtPassword.ClientSize.Width - pictureBtn.Width, -1);
             pictureBtn.MouseDown += OnPasswordSeeEnable;
             pictureBtn.MouseUp += OnPasswordSeeEnable;
-
-            //var btn = new Button { Size = new Size(30, txtPassword.ClientSize.Height + 2), Cursor = Cursors.Hand, Text = "\u263A", FlatStyle = FlatStyle.System };
-            //btn.Location = new Point(txtPassword.ClientSize.Width - btn.Width, -1);
-            //btn.Cursor = Cursors.Hand;
-            //btn.MouseDown += OnPasswordSeeEnable;
-            //btn.MouseUp += OnPasswordSeeEnable;
             txtPassword.Controls.Add(pictureBtn);
             SendMessage(txtPassword.Handle, 0xd3, (IntPtr)2, (IntPtr)(pictureBtn.Width << 16));
             base.OnLoad(e);
@@ -95,20 +80,24 @@ namespace MigrationRunner
                     using (var processor = factory.Create(connectionString, announcer, options))
                     {
                         btnMigrationUp.Text = @"Running..";
+                        this.Enable(false);
+                        txtOutput.Enabled = true;
                         var runner = new FluentMigrator.Runner.MigrationRunner(assembly, migrationContext, processor);
                         runner.MigrateUp(true);
                     }
-                    
+
                 });
                 task.ContinueWith((success) =>
                 {
                     btnMigrationUp.Text = @"Migration Up";
+                    this.Enable(true);
                     MessageBox.Show(@"Database Migrate succeeded!!", @"Success", MessageBoxButtons.OK, MessageBoxIcon.Asterisk);
                     txtOutput.Text += @"Succeeded!!";
                 }, TaskContinuationOptions.NotOnFaulted);
                 task.ContinueWith((fault) =>
                {
                    btnMigrationUp.Text = @"Migration Up";
+                   this.Enable(true);
                    MessageBox.Show($@"Database Migrate failed with {fault?.Exception?.Message}!!", @"ERROR", MessageBoxButtons.OK, MessageBoxIcon.Error);
                    txtOutput.Text += $@"Failed!! {Environment.NewLine} {fault?.Exception?.Message} {Environment.NewLine} {fault?.Exception?.InnerException?.Message}";
                }, TaskContinuationOptions.OnlyOnFaulted);
