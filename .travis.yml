@@ -2,10 +2,10 @@ language: csharp
 solution: MigrationRunner.sln
 install:
   - nuget restore MigrationRunner.sln
-  - nuget install NUnit.Runners -Version 3.4.1 -OutputDirectory libs
+  - nuget install NUnit.Runners -Version 3.4.1 -OutputDirectory ./libs
 script:
   - xbuild /p:Configuration=Release MigrationRunner.sln
-  - mono libs/NUnit.Runners.3.4.1/tools/nunit-console.exe libs/MigrationRunner.Test/bin/Debug/MigrationRunner.Test.dll
+  - mono ./libs/NUnit.Runners.3.4.1/tools/nunit-console.exe ./libs/MigrationRunner.Test/bin/Debug/MigrationRunner.Test.dll
 deploy:
   provider: releases
   api_key: "79bd0a7b6294145bde09c390b2f5c03680c589b1"
