@@ -55,6 +55,7 @@ namespace MigrationRunner
         {
             ReloadSettings();
             if (InvalidateSettings()) return;
+            txtOutput.Text = string.Empty;
             var announcer = new FluentMigrator.Runner.Announcers.TextWriterAnnouncer(s => txtOutput.Text += s);
             var assembly = Assembly.LoadFile(_assemblyPath);
             var migrationContext = new FluentMigrator.Runner.Initialization.RunnerContext(announcer)
@@ -150,7 +151,10 @@ namespace MigrationRunner
             txtDatabase.Text = Properties.Settings.Default.Database;
             var server = Properties.Settings.Default.Server;
             if (!string.IsNullOrEmpty(server))
-                cmbServer.SelectedIndex = cmbServer.FindStringExact(server);
+            {
+                var index = cmbServer.FindStringExact(server);
+                if (index == -1) cmbServer.Text = server; else cmbServer.SelectedIndex = index;
+            }
             txtPassword.Text = Properties.Settings.Default.Password;
             ReloadSettings();
         }
@@ -159,7 +163,11 @@ namespace MigrationRunner
         {
             _user = txtUsername.Text;
             var comboboxItem = cmbServer.SelectedItem as ComboboxItem;
-            if (comboboxItem != null) _server = comboboxItem.Value.ToString();
+            if (comboboxItem == null)
+            {
+                if (!string.IsNullOrEmpty(cmbServer.Text)) _server = cmbServer.Text;
+            }
+            else _server = comboboxItem.Value.ToString();
             _assemblyPath = _openFileDialog.FileName;
             _database = txtDatabase.Text;
             _password = txtPassword.Text;
@@ -214,6 +222,11 @@ namespace MigrationRunner
             var comboboxItem = cmbServer.SelectedItem as ComboboxItem;
             if (comboboxItem != null)
                 _server = comboboxItem.Value.ToString();
+        }
+
+        private void exitToolStripMenuItem_TextChanged(object sender, EventArgs e)
+        {
+            _server = cmbServer.Text;
         }
     }
 }

@@ -4,3 +4,10 @@ install:
   - nuget restore MigrationRunner.sln
 script:
   - xbuild /p:Configuration=Release MigrationRunner.sln
+deploy:
+  provider: releases
+  api_key: "79bd0a7b6294145bde09c390b2f5c03680c589b1"
+  file: "MigrationRunner"
+  skip_cleanup: true
+  on:
+    tags: true
