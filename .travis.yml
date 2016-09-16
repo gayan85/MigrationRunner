@@ -5,4 +5,4 @@ before_install:
 before_script:
   - nuget restore MigrationRunner.sln
 after_script:
-  - nunit-console libs/MigrationRunner.Test/bin/Debug/MigrationRunner.Test.dll
+  - nunit-console libs/MigrationRunner.Test/bin/Release/MigrationRunner.Test.dll
