@@ -1,8 +1,8 @@
 language: csharp
 solution: MigrationRunner.sln
-install:
+before_install:
+  - sudo apt-get install nunit-console
+before_script:
   - nuget restore MigrationRunner.sln
-  - nuget install NUnit.Runners -Version 3.4.1 -OutputDirectory libs
-script:
-  - xbuild /p:Configuration=Release MigrationRunner.sln
-  - mono $TRAVIS_BUILD_DIR/libs/NUnit.ConsoleRunner.3.4.1/tools/nunit-console.exe $TRAVIS_BUILD_DIR/libs/MigrationRunner.Test/bin/Debug/MigrationRunner.Test.dll
+after_script:
+  - nunit-console libs/MigrationRunner.Test/bin/Debug/MigrationRunner.Test.dll
