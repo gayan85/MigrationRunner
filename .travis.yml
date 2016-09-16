@@ -6,10 +6,3 @@ install:
 script:
   - xbuild /p:Configuration=Release MigrationRunner.sln
   - mono $TRAVIS_BUILD_DIR/MigrationRunner/libs/NUnit.Runners.3.4.1/tools/nunit-console.exe $TRAVIS_BUILD_DIR/MigrationRunner/libs/MigrationRunner.Test/bin/Debug/MigrationRunner.Test.dll
-deploy:
-  provider: releases
-  api_key: "79bd0a7b6294145bde09c390b2f5c03680c589b1"
-  file: "MigrationRunner"
-  skip_cleanup: true
-  on:
-    tags: true
