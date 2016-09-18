@@ -182,7 +182,6 @@ namespace MigrationRunner
                 _assemblyPath = _openFileDialog.FileName;
                 txtAssemblyPath.Text = _assemblyPath;
             }
-            Console.WriteLine(result);
         }
 
         private void saveConfigurationToolStripMenuItem_Click(object sender, EventArgs e)
@@ -222,11 +221,6 @@ namespace MigrationRunner
             var comboboxItem = cmbServer.SelectedItem as ComboboxItem;
             if (comboboxItem != null)
                 _server = comboboxItem.Value.ToString();
-        }
-
-        private void exitToolStripMenuItem_TextChanged(object sender, EventArgs e)
-        {
-            _server = cmbServer.Text;
         }
     }
 }
