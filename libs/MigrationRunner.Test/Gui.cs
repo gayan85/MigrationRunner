@@ -27,6 +27,7 @@ namespace MigrationRunner.Test
             var main = new Main();
             Assert.DoesNotThrow(() =>
             {
+            	throw new Exception("Custom Fail occured");
                 main.Enable(false);
             });
         }
