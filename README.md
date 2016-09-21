@@ -3,4 +3,4 @@
 
 # MigrationRunner
 
-MigrationRunner GUI application for webportal migration runs menually 
+MigrationRunner GUI application for migration runs menually 
